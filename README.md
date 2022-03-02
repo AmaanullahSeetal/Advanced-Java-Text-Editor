@@ -1,7 +1,7 @@
 # Advanced Java Text Editor
 
 ## Description
-- This is a GUI-based Java editor
+- This is a GUI-based Java text editor
 - It has an in-built API for the addition of plugins to extend its base functionalities
 
 <div align="center">
@@ -27,20 +27,25 @@
 
 <br/>
 
+
 ## Sample Java plugins:
 
 ### Date Plugin : 
-Location : `\proj_pluginDate\bin\src\main\java\texteditor\DatePlugIn.class`
-
+- Location : `\proj_pluginDate\bin\src\main\java\texteditor\DatePlugIn.class`
+- Details : It adds a new button labelled “Date” to the taskbar. It inserts the current date and time when pressed.
 
 ### Find Plugin : 
-Location : `\proj_pluginFind\bin\src\main\java\texteditor\FindPlugIn.class`
-<br/><br/>
+- Location : `\proj_pluginFind\bin\src\main\java\texteditor\FindPlugIn.class`
+- Details : It adds a new button labelled “Find” to the taskbar. When pressed, a prompt is displayed requesting the user for a search term. Finally it highlights the word if found.
+
+<br/>
+
 
 ## Sample Python plugin:
 
 ### Emoji Plugin : 
-Location : `\emoji.py`
+- Location : `\emoji.py`
+- Details : It automatically converts ":-)" to 😊 emojis in the text
 <br/><br/>
 
 ## Connect with me:
