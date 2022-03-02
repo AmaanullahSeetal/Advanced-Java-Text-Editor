@@ -31,7 +31,7 @@
 <br/>
 
 ### Date Plugin : 
-Location : \proj_pluginDate\bin\src\main\java\texteditor\DatePlugIn.class
+Location : `\proj_pluginDate\bin\src\main\java\texteditor\DatePlugIn.class`
 
 
 ### Find Plugin : 
