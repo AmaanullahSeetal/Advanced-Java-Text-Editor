@@ -1,0 +1,122 @@
+PARSER_BEGIN(keysParser)
+
+/** ID lister. */
+import java.nio.charset.*;
+import java.nio.file.*;
+import java.io.*;
+import java.util.ArrayList;
+import javafx.scene.control.TextArea;
+
+public class keysParser
+{
+  /** Main entry point. */
+  public static void main(String args[]) throws ParseException
+  {
+	try	
+    {
+      	Path path 			= Paths.get("D:\\Eclipse_Workspace\\SEC_CodeDump\\SEC_Assignment2\\keymap");
+		String keymapFile	= new String(Files.readAllBytes(path), StandardCharsets.UTF_8);		
+		keysParser parser 	= new keysParser(new java.io.StringReader(keymapFile));
+
+		TextArea txtArea 	= null;
+		ArrayList<keyMapCombn> keyCombsList = parser.Input(txtArea);
+
+		for(keyMapCombn a : keyCombsList)
+        {
+        	System.out.println(a.toString());             	
+        }
+    }
+    catch(ParseException e)
+    {
+      System.out.println("Error parsing file: \n" + e.getMessage());
+    }
+    catch(NoSuchFileException e)
+    {
+      System.out.println("Error reading file: \n" + e.getMessage());
+    } 
+    catch (IOException e) 
+    {
+    	 System.out.println("Error reading file: \u005cn" + e.getMessage());
+	}
+  }
+}
+
+PARSER_END(keysParser)
+
+SKIP :	{ " "| "\t" }
+
+TOKEN :
+{
+	< A 		: 	"alt">
+|	< B 		: 	"ctrl">
+|	< C 		: 	"shift">
+|	< PLUS		: 	"+">
+| 	< EQUAL		:	"=" >
+|	< VNAME 	: 	(["a"-"z","A"-"Z"]) >
+|	< NEWLINE	: 	("\r\n" | "\n\r" | "\r" | "\n") >
+|	< INS		:	"insert" >
+| 	< DEL		:	"delete">
+| 	< WRITESTR	:  	"\"" ("\\" ~[]  |  ~["\""])* "\"" >
+| 	< AT		:	"at">
+| 	< START		:	"start">
+| 	< OF		:	"of">
+| 	< LINE		:	"line">
+| 	< CARET		:	"caret">
+}
+
+/** Top level production. */
+ArrayList<keyMapCombn> Input(TextArea txtArea) :
+{
+  	Token task		= new Token();
+  	Token str		= new Token();
+  	Token alt 		= new Token();
+  	Token ctrl 		= new Token();
+  	Token shift 	= new Token();
+  	Token vName 	= new Token();
+  	String insPos	= null;
+  	
+	ArrayList<keyMapCombn> keyCombsList = new ArrayList<keyMapCombn>();	
+	TextArea textArea = null;
+}
+{
+	(
+	  	(
+	  	  	LOOKAHEAD(8)
+ 			(alt=<A>) <PLUS> (ctrl=<B> <PLUS>)? (shift=<C> <PLUS>)? vName=<VNAME> <EQUAL>
+	 		|
+	 		LOOKAHEAD(8)
+	 		(alt=<A>) <PLUS> (shift=<C> <PLUS>)? (ctrl=<B> <PLUS>)? vName=<VNAME> <EQUAL>
+	 		|
+	 		LOOKAHEAD(8)
+	 		(ctrl=<B>) <PLUS> (shift=<C> <PLUS>)? (alt=<A> <PLUS>)? vName=<VNAME> <EQUAL>
+	 		|
+	 		LOOKAHEAD(8)
+	 		(ctrl=<B>) <PLUS> (alt=<A> <PLUS>)? (shift=<C> <PLUS>)? vName=<VNAME> <EQUAL>
+	 		|
+	 		LOOKAHEAD(8)
+	 		(shift=<C>) <PLUS> (alt=<A> <PLUS>)? (ctrl=<B> <PLUS>)? vName=<VNAME> <EQUAL>
+	 		|
+	 		LOOKAHEAD(8)
+	 		(shift=<C>) <PLUS> (ctrl=<B> <PLUS>)? (alt=<A> <PLUS>)? vName=<VNAME> <EQUAL>
+		)
+		(task = <DEL> | task = <INS>)
+ 		(str  = <WRITESTR>)
+		(<AT>   (<START><OF><LINE> { insPos="@start"; } |   <CARET> { insPos="@caret"; }  ) )
+		(<NEWLINE>|<EOF>)
+		
+		{
+		  	// Add key combn to list :
+			keyMapCombn kk = new keyMapCombn(str, alt, ctrl, shift, vName, insPos, task, txtArea);
+			keyCombsList.add(kk);
+
+			// Reset vaiables :
+			alt.image 	= null;			
+			ctrl.image 	= null;
+			shift.image = null;
+		}
+		
+	)*
+
+	{return keyCombsList;}
+}
+

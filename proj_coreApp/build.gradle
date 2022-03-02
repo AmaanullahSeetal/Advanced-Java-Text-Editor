@@ -1,0 +1,40 @@
+/*
+ * CORE APPLICATION BUILD FILE
+ */
+
+plugins {
+
+	// Apply plugins to add support
+    id 'java'
+	id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.10'
+    id 'eclipse'
+}
+
+repositories {
+    // You can declare any repository here.
+	mavenCentral()
+}
+
+dependencies {    
+	implementation 'org.apache.commons:commons-text:1.9'   
+    
+    // Indicates that the 'proj_coreApp' subproject depends on the 'proj_plugins' subproject.
+	implementation project(':proj_API')
+	
+	// Jython support :
+	implementation 'org.python:jython-standalone:2.7.2'
+	
+	// Allows reflection to work during runtime (add to classpath) :
+	runtimeOnly project(':proj_pluginDate')
+	runtimeOnly project(':proj_pluginFind')
+}
+
+javafx {
+    modules = [ 'javafx.controls' ]
+}
+
+application {	
+    // Define the main class for the application.
+    mainClass = 'texteditor.EditorGUI'
+}

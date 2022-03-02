@@ -1,0 +1,10 @@
+ctrl+i       = insert"    " at start of line
+ctrl+shift+i = delete "    " at start of line
+ctrl+d       = insert "//" at start of line
+ctrl+shift+d = delete "//" at start of line
+alt+t        = insert "/*TODO*/" at caret
+alt+f        = insert "/*FIXMEPLZ*/" at caret
+alt+s        = delete "/*TODO*/" at caret
+alt+g        = delete "/*FIXMEPLZ*/" at caret
+shift+alt+ctrl+z   = insert "HELLO" at caret
+shift+alt+ctrl+x   = delete "HELLO" at caret
