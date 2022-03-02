@@ -28,7 +28,6 @@
 <br/>
 
 ## Sample Java plugins:
-<br/>
 
 ### Date Plugin : 
 Location : `\proj_pluginDate\bin\src\main\java\texteditor\DatePlugIn.class`
