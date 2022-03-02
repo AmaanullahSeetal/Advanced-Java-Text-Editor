@@ -38,7 +38,6 @@ Location : `\proj_pluginFind\bin\src\main\java\texteditor\FindPlugIn.class`
 <br/><br/>
 
 ## Sample Python plugin:
-<br/>
 
 ### Emoji Plugin : 
 Location : `\emoji.py`
