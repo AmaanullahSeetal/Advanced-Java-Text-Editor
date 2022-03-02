@@ -3,6 +3,7 @@
 ## Description
 - This is a GUI-based Java text editor
 - It has an in-built API for the addition of plugins to extend its base functionalities
+- It also has a built-in DSL parser to map shortcut keys from a keymap file
 
 <div align="center">
     <img src="https://i.imgur.com/RFJayeN.png">
